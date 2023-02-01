@@ -1,3 +1,23 @@
 div.row{
     margin: 0.5rem 0;
 }
+
+.orbitron-font {
+    font-family: 'Orbitron';
+}
+
+.vt323-font {
+    font-family: 'VT323';
+}
+
+.oswald-font {
+    font-family: 'Oswald';
+}
+
+.noto-font{
+    font-family: 'Noto Sans Symbols 2';
+}
+
+.chakra-font{
+    font-family: 'Chakra Petch';
+}

@@ -1,13 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FaPlus, FaEquals, FaMinus, FaTimes, FaDivide, FaPercentage, FaBackspace } from "react-icons/fa";
+import WebFont from 'webfontloader';
 
 const CalculatorApp = () => {
 
   const [display, setDisplay] = useState('');
-  const [operando1, setOperando1] = useState(0);
-  const [operando2, setOperando2] = useState(0);
-  const [operador, setOperador] = useState('');
   const [operaciones, setOperaciones] = useState('');
+
 
   const handleNumber = ( number ) => {
     //console.log(number);
@@ -32,7 +31,6 @@ const CalculatorApp = () => {
   const handlePlus = () => {
     if (isNumeric(display)) {
       console.log('entra');
-      setOperando1( display );
       setOperaciones(`${operaciones}${display}+`);
       setDisplay('');
     }
@@ -41,7 +39,6 @@ const CalculatorApp = () => {
 
   const handleOperator = ( operator ) => {
     if (isNumeric(display)) {
-      setOperando1( display );
       setOperaciones(`${operaciones}${display}${operator}`);
       setDisplay('');
     }
@@ -49,7 +46,6 @@ const CalculatorApp = () => {
 
   const handleEqual = () => {
     if (isNumeric(display)) {
-      setOperando1( display );
       setOperaciones(`${operaciones}${display}=${ evaluateMathExpression(`${operaciones}${display}`) }`);
       setDisplay( evaluateMathExpression(`${operaciones}${display}`) );
     }
@@ -59,6 +55,10 @@ const CalculatorApp = () => {
     setDisplay('');
     setOperaciones('');
   }
+
+  const handleBack = () => {
+    setDisplay( display.slice(0, -1) );
+  }
   
   const isNumeric = (num) => {
     return !isNaN(num);
@@ -67,6 +67,14 @@ const CalculatorApp = () => {
   const evaluateMathExpression = (str) => {
     return Function(`'use strict'; return (${str})`)();
   }
+
+  useEffect(() => {
+    WebFont.load({
+      google: {
+        families: ['Orbitron', 'VT323', 'Oswald', 'Noto Sans Symbols 2', 'Chakra Petch']
+      }
+    });
+   }, []);
 
   return (
     <>
@@ -78,78 +86,78 @@ const CalculatorApp = () => {
         </div>
         <div className='row'>
             <div className='col-12'>
-                <input type="text" name="display" id="display" className='form-control text-end fs-1' placeholder='0' value={ display } />
+                <input type="text" name="display" id="display" className='form-control text-end fs-1 chakra-font' placeholder='0' value={ display } />
             </div>
         </div>
         <div className='row'>
             <div className='col-3'>
-                <button className='btn btn-lg btn-danger w-100' onClick={ () => handleClear() }>C</button>
+                <button className='btn btn-lg btn-danger bg-gradient w-100' onClick={ () => handleClear() }><strong>C</strong></button>
             </div>
             <div className='col-3'>
-                <button className='btn btn-lg btn-primary w-100'><FaBackspace /></button>
+                <button className='btn btn-lg bg-primary bg-gradient w-100' onClick={ ()=> handleBack() }><FaBackspace className='text-white' /></button>
             </div>
             <div className='col-3'>
-                <button className='btn btn-lg btn-primary w-100'><FaPercentage /></button>
+                <button className='btn btn-lg bg-primary bg-gradient w-100'><FaPercentage className='text-white' /></button>
             </div>
             <div className='col-3'>
-                <button className='btn btn-lg btn-primary w-100' onClick={ ()=>handleOperator('/') } ><FaDivide /></button>
-            </div>
-        </div>
-        <div className='row'>
-            <div className='col-3'>
-                <button className='btn btn-lg btn-info w-100' onClick={()=> handleNumber(7)}>7</button>
-            </div>
-            <div className='col-3'>
-                <button className='btn btn-lg btn-info w-100' onClick={()=> handleNumber(8)}>8</button>
-            </div>
-            <div className='col-3'>
-                <button className='btn btn-lg btn-info w-100' onClick={()=> handleNumber(9)}>9</button>
-            </div>
-            <div className='col-3'>
-                <button className='btn btn-lg btn-primary w-100' onClick={ ()=>handleOperator('*') } ><FaTimes /></button>
+                <button className='btn btn-lg bg-primary bg-gradient w-100' onClick={ ()=>handleOperator('/') } ><FaDivide className='text-white' /></button>
             </div>
         </div>
         <div className='row'>
             <div className='col-3'>
-                <button className='btn btn-lg btn-info w-100' onClick={()=> handleNumber(4)}>4</button>
+                <button className='btn btn-lg bg-info bg-gradient w-100' onClick={()=> handleNumber(7)}>7</button>
             </div>
             <div className='col-3'>
-                <button className='btn btn-lg btn-info w-100' onClick={()=> handleNumber(5)}>5</button>
+                <button className='btn btn-lg bg-info bg-gradient w-100' onClick={()=> handleNumber(8)}>8</button>
             </div>
             <div className='col-3'>
-                <button className='btn btn-lg btn-info w-100' onClick={()=> handleNumber(6)}>6</button>
+                <button className='btn btn-lg bg-info bg-gradient w-100' onClick={()=> handleNumber(9)}>9</button>
             </div>
             <div className='col-3'>
-                <button className='btn btn-lg btn-primary w-100' onClick={ ()=>handleOperator('-') } ><FaMinus /></button>
+                <button className='btn btn-lg bg-primary bg-gradient w-100' onClick={ ()=>handleOperator('*') } ><FaTimes className='text-white' /></button>
             </div>
         </div>
         <div className='row'>
             <div className='col-3'>
-                <button className='btn btn-lg btn-info w-100' onClick={()=> handleNumber(1)}>1</button>
+                <button className='btn btn-lg bg-info bg-gradient w-100' onClick={()=> handleNumber(4)}>4</button>
             </div>
             <div className='col-3'>
-                <button className='btn btn-lg btn-info w-100' onClick={()=> handleNumber(2)}>2</button>
+                <button className='btn btn-lg bg-info bg-gradient w-100' onClick={()=> handleNumber(5)}>5</button>
             </div>
             <div className='col-3'>
-                <button className='btn btn-lg btn-info w-100' onClick={()=> handleNumber(3)}>3</button>
+                <button className='btn btn-lg bg-info bg-gradient w-100' onClick={()=> handleNumber(6)}>6</button>
             </div>
             <div className='col-3'>
-                <button className='btn btn-lg btn-primary w-100' onClick={ ()=>handlePlus() }><FaPlus /></button>
+                <button className='btn btn-lg bg-primary bg-gradient w-100' onClick={ ()=>handleOperator('-') } ><FaMinus className='text-white' /></button>
+            </div>
+        </div>
+        <div className='row'>
+            <div className='col-3'>
+                <button className='btn btn-lg bg-info bg-gradient w-100' onClick={()=> handleNumber(1)}>1</button>
+            </div>
+            <div className='col-3'>
+                <button className='btn btn-lg bg-info bg-gradient w-100' onClick={()=> handleNumber(2)}>2</button>
+            </div>
+            <div className='col-3'>
+                <button className='btn btn-lg bg-info bg-gradient w-100' onClick={()=> handleNumber(3)}>3</button>
+            </div>
+            <div className='col-3'>
+                <button className='btn btn-lg bg-primary bg-gradient w-100' onClick={ ()=>handlePlus() }><FaPlus className='text-white' /></button>
             </div>
         </div>
         <div className='row'>
             <div className='col-6'>
-                <button className='btn btn-lg btn-info w-100' onClick={()=> handleNumber(0)} >0</button>
+                <button className='btn btn-lg bg-info bg-gradient w-100' onClick={()=> handleNumber(0)} >0</button>
             </div>
             <div className='col-3'>
-                <button className='btn btn-lg btn-warning w-100' onClick={ ()=> handleDot() }>.</button>
+                <button className='btn btn-lg btn-warning bg-gradient w-100' onClick={ ()=> handleDot() }>.</button>
             </div>
             <div className='col-3'>
-                <button className='btn btn-lg btn-primary w-100' onClick={ ()=> handleEqual() }><FaEquals /></button>
+                <button className='btn btn-lg bg-primary bg-gradient w-100' onClick={ ()=> handleEqual() }><FaEquals className='text-white' /></button>
             </div>
         </div>
     </>
   )
 }
 
-export default CalculatorApp
+export default CalculatorApp;
